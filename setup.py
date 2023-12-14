@@ -8,7 +8,7 @@ setup(
     author_email="duong.kim.seng@gamil.com",
     packages=find_packages(),
     entry_points={
-        "console_scripts": ["fastrun=src.cli.main:main"],
+        "console_scripts": ["fastrun=src.cli.main:fastrun"],
     },
     install_requires=["fastapi", "uvicorn", "alembic", "SQLAlchemy"],
 )

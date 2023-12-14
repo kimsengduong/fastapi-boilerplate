@@ -1,38 +1,39 @@
+import importlib
+import pkgutil
+
 import click
 from alembic.config import main as alembic_main
 from uvicorn import run
 
+from src import cli
+
+import colorama
+
 
 @click.group()
-def main():
-    return
+def fastrun():
+    pass
 
 
-@main.command()
+# add sub-commands
+for load, module_name, is_pkg in pkgutil.walk_packages(
+    cli.__path__, cli.__name__ + "."
+):
+    module = importlib.import_module(module_name)
+    p, m = module_name.rsplit(".", 1)
+
+    if m == "main":
+        continue
+
+    for attribute in module.__dict__.values():
+        if isinstance(attribute, (click.core.Command, click.core.Group)):
+            fastrun.add_command(attribute)
+
+            if isinstance(attribute, click.core.Group):
+                break
+
+
+@fastrun.command()
 def start():
     """Start the server."""
     run("src.app:app", host="0.0.0.0", port=8000, reload=True)
-
-
-@main.command(name="upgrade")
-def upgrade():
-    """Migrate the database."""
-    alembic_main(argv=["upgrade", "head"])
-
-
-@main.command()
-@click.argument("revision", required=True)
-def downgrade(revision):
-    """Downgrade the database."""
-    alembic_main(argv=["downgrade", revision])
-
-
-@main.command()
-@click.option("--message", required=True)
-def revision(message):
-    """Create a new revision."""
-    alembic_main(argv=["revision", "--autogenerate", "-m", message])
-
-
-if __name__ == "__main__":
-    main()
