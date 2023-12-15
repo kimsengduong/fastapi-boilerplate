@@ -6,8 +6,7 @@ from alembic.config import main as alembic_main
 from uvicorn import run
 
 from src import cli
-
-import colorama
+from src.config import APP_HOST, APP_PORT
 
 
 @click.group()
@@ -36,4 +35,4 @@ for load, module_name, is_pkg in pkgutil.walk_packages(
 @fastrun.command()
 def start():
     """Start the server."""
-    run("src.app:app", host="0.0.0.0", port=8000, reload=True)
+    run("src.app:app", host=APP_HOST, port=APP_PORT, reload=True)

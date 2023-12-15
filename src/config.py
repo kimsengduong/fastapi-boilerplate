@@ -1,0 +1,10 @@
+APP_HOST = "localhost"
+APP_PORT = 8000
+
+POSTGRES_USER = "postgres"
+POSTGRES_PASSWORD = "postgres"
+POSTGRES_SERVER = "localhost"
+POSTGRES_DB = "fastapi-boilerplate"
+PORT = 5432
+
+SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{PORT}/{POSTGRES_DB}"
