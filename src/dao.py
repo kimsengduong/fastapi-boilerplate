@@ -37,9 +37,12 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         offset = (page - 1) * limit
         return Session.query(self.model).offset(offset).limit(limit).all()
 
-    def create(self, *, obj_in: CreateSchemaType) -> ModelType:
+    @classmethod
+    def create(self, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
+        print(colorama.Fore.RED, "obj_in_data", obj_in_data, colorama.Style.RESET_ALL)
         db_obj = self.model(**obj_in_data)  # type: ignore
+        print(colorama.Fore.RED, "db_obj", db_obj, colorama.Style.RESET_ALL)
         Session.add(db_obj)
         Session.commit()
         Session.refresh(db_obj)

@@ -8,3 +8,9 @@ POSTGRES_DB = "fastapi-boilerplate"
 PORT = 5432
 
 SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{PORT}/{POSTGRES_DB}"
+
+# openssl rand -hex 32
+SECRET_KEY = "CHANGE_ME_PLEASE"
+JWT_ALGORITHM = "HS256"
+JWT_EXP_TIME_MINUTES = 60  ## 1 hour
+JWT_REFRESH_EXP_TIME_MINUTES = 7 * 24 * 60  ## (7 days * 24 hours * 60 minutes)
