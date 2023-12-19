@@ -14,6 +14,6 @@ class User(Base, UserAuthentication):
     email = Column(String(100), nullable=False)
     # authentication = relationship("UserAuthentication", back_populates="user")
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+    # def __init__(self, username, email):
+    #     self.username = username
+    #     self.email = email

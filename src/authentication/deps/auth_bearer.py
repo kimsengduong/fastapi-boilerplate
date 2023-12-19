@@ -3,8 +3,7 @@ import typing as t
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
-
-from src.authentication.auth_handler import decodeJWT
+from src.authentication import Auth
 
 get_bearer_token = HTTPBearer(auto_error=False)
 
@@ -53,7 +52,7 @@ class JWTBearer(HTTPBearer):
         isTokenValid: bool = False
 
         try:
-            payload = decodeJWT(jwtoken)
+            payload = Auth().decodeJWT(jwtoken)
         except:
             payload = None
         if payload:

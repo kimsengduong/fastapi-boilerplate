@@ -4,6 +4,12 @@ from src.user.api import router as user_router
 
 api_router = APIRouter()
 
+
+@api_router.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+
 api_router.include_router(
     router=user_router,
     prefix="/users",

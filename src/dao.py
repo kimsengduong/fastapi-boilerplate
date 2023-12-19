@@ -11,7 +11,7 @@ ModelType = TypeVar("ModelType", bound=Any)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
-Session = SessionLocal
+Session = SessionLocal()
 
 
 class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
@@ -40,9 +40,7 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     @classmethod
     def create(self, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
-        print(colorama.Fore.RED, "obj_in_data", obj_in_data, colorama.Style.RESET_ALL)
         db_obj = self.model(**obj_in_data)  # type: ignore
-        print(colorama.Fore.RED, "db_obj", db_obj, colorama.Style.RESET_ALL)
         Session.add(db_obj)
         Session.commit()
         Session.refresh(db_obj)
@@ -68,9 +66,7 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self, *, id: int, obj_in: Union[UpdateSchemaType, Dict[str, Any]]
     ) -> ModelType:
         obj = Session.query(self.model).get(id)
-        print(colorama.Fore.RED, "obj", obj, colorama.Style.RESET_ALL)
         obj_data = jsonable_encoder(obj)
-        print(colorama.Fore.RED, "obj_data", obj_data, colorama.Style.RESET_ALL)
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
