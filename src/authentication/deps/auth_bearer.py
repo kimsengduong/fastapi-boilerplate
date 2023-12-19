@@ -3,6 +3,7 @@ import typing as t
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
+
 from src.authentication import Auth
 
 get_bearer_token = HTTPBearer(auto_error=False)

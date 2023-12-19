@@ -3,14 +3,12 @@ import time
 from typing import Dict
 
 from jose import jwe, jwt
-from passlib.context import CryptContext  # used for hashing the password
+from passlib.hash import pbkdf2_sha256
 
 from src import config
 
 
 class Auth:
-    hasher = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
     SECRET = config.SECRET_KEY
 
     JWT_ALGORITHM = config.JWT_ALGORITHM
@@ -18,11 +16,11 @@ class Auth:
     JWT_IAT = round(time.time())
     JWT_REFRESH_EXP_TIME_MINUTES = config.JWT_REFRESH_EXP_TIME_MINUTES
 
-    def encode_password(self, password):
-        return self.hasher.hash(password)
+    def hash_password(self, password):
+        return pbkdf2_sha256.hash(password)
 
-    def verify_password(self, password, encoded_password):
-        return self.hasher.verify(password, encoded_password)
+    def verify_password(self, password, hashed_password):
+        return pbkdf2_sha256.verify(password, hashed_password)
 
     @classmethod
     def encodeJWT(self, **kwargs) -> str:

@@ -1,6 +1,7 @@
 from src.authentication import Auth
 from src.user.dao import UserDAO
 from src.user.schemas import UserCreate
+from fastapi import HTTPException
 
 
 class SignUpCommand:
@@ -10,7 +11,7 @@ class SignUpCommand:
     def run(self):
         self.validate()
 
-        self.user_create.password = Auth().encode_password(self.user_create.password)
+        self.user_create.password = Auth().hash_password(self.user_create.password)
 
         new_user = UserDAO().create(self.user_create)
 
@@ -20,6 +21,6 @@ class SignUpCommand:
 
     def validate(self):
         if UserDAO().get_by_username(self.user_create.username):
-            raise Exception("Username already exists")
+            raise HTTPException(400, "Username already exists")
         if UserDAO().get_by_email(self.user_create.email):
-            raise Exception("Email already exists")
+            raise HTTPException(400, "Email already exists")

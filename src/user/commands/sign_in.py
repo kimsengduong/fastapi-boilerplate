@@ -1,8 +1,6 @@
-from src.authentication import (
-    Auth,
-    SignInRequest,
-    SignInResponse,
-)
+from fastapi import HTTPException
+
+from src.authentication import Auth, SignInRequest, SignInResponse
 from src.user.dao import UserDAO
 from src.user.models import User
 
@@ -22,6 +20,6 @@ class SignInCommand:
     def validate(self):
         self.user = UserDAO().get_by_username(self.credential.username)
         if not self.user:
-            raise Exception("User not found")
+            raise HTTPException(401, "Invalid username")
         if not Auth().verify_password(self.credential.password, self.user.password):
-            raise Exception("Wrong password")
+            raise HTTPException(401, "Invalid password")
