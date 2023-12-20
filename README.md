@@ -2,7 +2,7 @@
 
 FastAPI boilerplate
 
-#### Clone repository:
+#### Clone repository
 
 ```
 git clone https://github.com/kimsengduong/fastapi-boilerplate.git

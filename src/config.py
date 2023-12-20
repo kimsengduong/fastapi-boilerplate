@@ -1,6 +1,13 @@
 APP_HOST = "localhost"
 APP_PORT = 8000
 
+APP_NAME = "FastAPI Boilerplate"
+APP_VERSION = "0.0.1"
+APP_CONTACT = {
+    "name": "Kimseng Duong",
+    "email": "duong.kim.seng@gmail.com",
+}
+
 POSTGRES_USER = "postgres"
 POSTGRES_PASSWORD = "postgres"
 POSTGRES_SERVER = "localhost"
