@@ -17,7 +17,11 @@ python -m venv venv
 #### Active virtual environment
 
 ```
+## Linux
 source venv/bin/active
+
+## Windows
+venv\Scripts\activate
 ```
 
 #### Install dependencies
