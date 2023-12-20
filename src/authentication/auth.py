@@ -1,4 +1,3 @@
-import os
 import time
 from typing import Dict
 
@@ -17,7 +16,7 @@ class Auth:
     JWT_REFRESH_EXP_TIME_MINUTES = config.JWT_REFRESH_EXP_TIME_MINUTES
 
     def hash_password(self, password):
-        return pbkdf2_sha256.hash(password)
+        return pbkdf2_sha256.hash(password, salt=self.SECRET.encode("utf-8"))
 
     def verify_password(self, password, hashed_password):
         return pbkdf2_sha256.verify(password, hashed_password)
@@ -52,7 +51,7 @@ class Auth:
         )
 
         jwe_token = jwe.encrypt(
-            refresh_jwt, self.SECRET, algorithm="dir", encryption="A128GCM"
+            refresh_jwt, self.SECRET, algorithm="dir", encryption="A256GCM"
         )
 
         return jwe_token

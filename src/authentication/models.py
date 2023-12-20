@@ -3,4 +3,4 @@ from sqlalchemy.orm import relationship
 
 
 class UserAuthentication:
-    password = Column(String(100), nullable=False)
+    password = Column(String(256), nullable=False)

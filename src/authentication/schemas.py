@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class SignInRequest(BaseModel):
     username: str
-    password: str
+    password: str = Field(..., min_length=8, max_length=128)
 
 
 class SignInResponse(BaseModel):

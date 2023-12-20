@@ -59,3 +59,6 @@ class JWTBearer(HTTPBearer):
         if payload:
             isTokenValid = True
         return isTokenValid
+
+
+TokenDep = Depends(JWTBearer())
