@@ -9,8 +9,8 @@ load_dotenv()
 
 class Settings(BaseSettings):
     # API Settings
-    APP_HOST: str = "localhost"
-    APP_PORT: int = 8000
+    APP_HOST: str = os.getenv("APP_HOST", "localhost")
+    APP_PORT: int = os.getenv("APP_PORT", 8000)
     APP_NAME: str = "FastAPI Boilerplate"
     APP_VERSION: str = "0.0.1"
     APP_CONTACT: Dict[str, str] = {
@@ -31,7 +31,7 @@ class Settings(BaseSettings):
 
     # Security Settings
     SECRET_KEY: str = os.getenv(
-        "SECRET_KEY", "9e25a2588fcee7d21ea15fb1a63d5135"
+        "SECRET_KEY", "25cf6f68989156b573c8fb30b3a7f356"
     )  # openssl rand -hex 16
     JWT_ALGORITHM: str = "HS256"
     JWT_EXP_TIME_MINUTES: int = 60
@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     AWS_SECRET_ACCESS_KEY: str = os.getenv("AWS_SECRET_ACCESS_KEY", "")
     AWS_REGION: str = os.getenv("AWS_REGION", "us-east-1")
     S3_BUCKET_NAME: str = os.getenv("S3_BUCKET_NAME", "")
-        
+
     # Cookie Settings
     COOKIE_DOMAIN: str = os.getenv("COOKIE_DOMAIN", "localhost")
     COOKIE_SECURE: bool = os.getenv("COOKIE_SECURE", "False").lower() == "true"
