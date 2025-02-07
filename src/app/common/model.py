@@ -48,3 +48,17 @@ class BaseModel(Base):
     )
 
     is_deleted = Column(Boolean, default=False, doc="Soft delete flag")
+
+    def dict(self):
+        """
+        Converts a SQLAlchemy model instance to a dictionary.
+        """
+        data = {}
+        for column in self.__table__.columns:
+            value = getattr(self, column.name)
+            if isinstance(value, datetime):
+                value = value.isoformat()  # Convert datetime to ISO format string
+            elif isinstance(value, uuid.UUID):
+                value = str(value)
+            data[column.name] = value
+        return data
